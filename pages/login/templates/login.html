@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - SophieBoca{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/FormsStyles.css') }}">
+    <script src="{{ url_for('login.static', filename='js/Valid_LogIn.js') }}"></script>
+    <div class="login-container">
+        <h1>Log in</h1>
+        <p>Welcome back! Please enter your details.</p>
+         <div class="google-login" id="google-login-btn">
+            <img src="{{ url_for('login.static', filename='media/G_icon_no_bg.png') }}" alt="Google Sign In">
+            Sign in with Google
+         </div>
+        <div class="divider">or</div>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="logInPassword" placeholder="Password" required>
+            </div>
+            <div class="forgot-password">
+                <a href="#">Forgot Password?</a>
+            </div>
+            <button class="login-button" type="submit">Login Now</button>
+        </form>
+        <div class="signup">
+            Don’t have an account? <a href="{{ url_for('sign_up.index') }}">Sign up</a>
+        </div>
+        <br>
+    </div>
+{% endblock %}

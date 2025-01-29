@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Dog Information - SophieBoca{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('dog_info.static', filename='css/DogInfoStyles.css') }}">
+<script src="{{ url_for('dog_info.static', filename='js/DogInfoScript.js') }}"></script>
+
+<!-- Dog Information Section -->
+<div class="dog-info-container">
+    <div class="dog-photos">
+        <img src="{{ dog.photos[0] }}" alt="Dog Large Photo" class="large-photo" onclick="showLargeImage(this)">
+        <div class="small-photos">
+            {% for photo in dog.photos[1:] %}
+                <img src="{{ photo }}" alt="Dog Small Photo" onclick="showLargeImage(this)">
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="dog-info-details">
+        <h1>{{ dog.name }}
+            {% if dog.gender == 'male' %}
+                <i class="fa fa-mars gender-icon"></i>
+            {% else %}
+                <i class="fa fa-venus gender-icon"></i>
+            {% endif %}
+        </h1>
+        <div class="dog-detail"><span>Breed:</span><div>{{ dog.breed }}</div></div>
+        <div class="dog-detail"><span>Size:</span><div>{{ dog.size }}</div></div>
+        <div class="dog-detail"><span>Age:</span><div>{{ dog.age }}</div></div>
+        <div class="dog-detail"><span>Energy Level:</span><div>{{ dog.energy_level }}</div></div>
+        <div class="dog-detail"><span>Trainability:</span><div>{{ dog.trainability }}</div></div>
+        <div class="dog-detail"><span>Sterilized:</span><div>{{ dog.sterilized }}</div></div>
+    </div>
+</div>
+
+<div class="dog-info-container" style="margin-top: -80px;">
+    <div class="breed-information">
+        <h1>Breed Information</h1>
+        <div class="breed-description">
+            {{ dog.breed_description }}
+        </div>
+        <div class="breed-categories">
+            <div class="dog-detail"><span>Temperament:</span><div>{{ dog.temperament }}</div></div>
+            <div class="dog-detail"><span>Shedding Category:</span><div>{{ dog.shedding_category }}</div></div>
+            <div class="dog-detail"><span>Trainability Category:</span><div>{{ dog.trainability_category }}</div></div>
+            <div class="dog-detail"><span>Grooming Category:</span><div>{{ dog.grooming_category }}</div></div>
+        </div>
+        <div class="category-block">
+            <h1 style="margin-bottom: 10px; margin-top: -5px; font-size: 20px;">Association Info</h1>
+            <div class="dog-detail"><span>Name:</span><div>{{ dog.association_name }}</div></div>
+            <div class="dog-detail"><span>Address:</span><div>{{ dog.association_address }}</div></div>
+
+            <div class="dog-detail">
+                <button class="filter-btn search-by-photo-btn" id="adopt-btn" style="width: 100%; margin-bottom: -15px; padding: 10px 20px;">
+                    <i class="fa fa-dog"></i>
+                    <span class="search-text" style="color: #fff; margin-left: 10px;">I want to adopt!</span>
+                </button>
+            </div>
+
+            <script>
+                const isLoggedIn = {{ is_logged_in | tojson | safe }}; // Ensures safe JSON output
+
+                document.getElementById("adopt-btn").addEventListener("click", () => {
+                    if (isLoggedIn) {
+                        alert("Your adoption request has been sent! 🐾 The association will contact you soon - probably after giving some belly rubs! 🐶");
+                        window.location.href = "/"; // Redirect to homepage
+                    } else {
+                        alert("You need to register or log in before adopting a dog.");
+                        window.location.href = "/login"; // Redirect to login page
+                    }
+                });
+            </script>
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}

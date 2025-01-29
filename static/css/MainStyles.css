@@ -1,0 +1,421 @@
+/* General Styles */
+body {
+    margin-right: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #F6F2E9;
+}
+
+@font-face {
+    font-family: 'Berlin Sans FB Demi';
+    src: url('../media/fonts/BRLNSDB.TTF') format('truetype');
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px;
+    background-color: #F6F2E9;
+    border-bottom: 3px solid #E9DFC9;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.logo {
+    width: 250px;
+    height: auto;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin-left: -200px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #404040;
+    font-size: 16px;
+    font-weight: normal;
+    padding: 10px 25px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    background-color: #F6F2E9;
+}
+
+.nav-links a.active {
+    background-color: #0D92F4;
+    color: #fff;
+    font-weight: bold;
+}
+
+.nav-links a:hover:not(.active) {
+    background-color: #E9DFC9;
+    color: #404040;
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: 25px;
+}
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #404040;
+    transition: all 0.3s ease;
+}
+
+/* Log in Button */
+.login-btn {
+    background-color: #44B657;
+    color: white;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Segoe UI', sans-serif;
+    padding: 10px 26px;
+    margin-right: 60px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+}
+
+.login-btn:hover {
+    background-color: #28a745;
+}
+
+/* Hero Section */
+.hero-section {
+    text-align: center;
+    margin-top: 50px;
+    position: relative;
+    z-index: 2; /* Ensures text and buttons are above the dog image */
+}
+
+.center-image {
+    width: 69%;
+    margin: 0 auto;
+    z-index: 2; /* Keeps the center image above the dog */
+}
+
+.dog-div {
+    position: absolute;
+    width: 80%;
+    justify-content: center;
+    display: flex;
+    bottom: 0;
+    left: 5%;
+}
+
+.dog-image-main {
+    width: 48%;
+    z-index: 1;
+}
+
+.first-text {
+    position: absolute;
+    left: 0; /* Aligns to the left of the container */
+    width: 300px; /* Maintain the fixed width */
+    text-align: left; /* Ensures the text and button align to the left */
+    padding-left: 24%; /* Adds spacing from the left side of the page */
+}
+
+.description {
+    margin-top: 10px; /* Keeps space above the description */
+    font-size: 16px;
+    color: #555;
+    max-width: 400px;
+    line-height: 1.5;
+}
+
+.second-text {
+    position: absolute;
+    left: 63%;
+    bottom: -14%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensures proper spacing between content */
+    align-items: flex-start; /* Aligns text to the left */
+    width: 350px;
+    height: 150px; /* Adjust height to accommodate text and button */
+}
+
+.subtitle {
+    font-size: 22px;
+    font-family: 'Aptos Display', sans-serif;
+    color: #0D92F4;
+    margin-bottom: 5px; /* Reduced margin below the title */
+}
+
+.description2 {
+    margin-top: 5px; /* Fine-tune space above the description */
+    font-size: 16px;
+    color: #555;
+    max-width: 400px;
+    line-height: 1.5;
+}
+
+.text-content {
+    text-align: left; /* Aligns the text content to the left */
+}
+
+/* Buttons */
+.primary-btn {
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    background-color: #0D92F4;
+    color: #fff;
+    align-self: flex-end;
+    text-decoration: none;
+}
+
+.primary-btn i {
+    margin-right: 8px; /* Extra space for the icon */
+    font-size: 16px; /* Adjust icon size if needed */
+}
+
+.primary-btn:hover {
+    transform: scale(1.08);
+}
+
+/* Responsive Styles */
+@media (max-width: 1300px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 80px;
+        background-color: #F6F2E9;
+        padding: 20px;
+        width: 88%;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        margin-left: 0px;
+
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .login-btn {
+        margin-right: 60px;
+    }
+
+    .hero-section {
+        display: grid;
+        margin-top: 100px;
+        grid-template-columns: 1fr; /* Single column layout */
+        gap: 20px; /* Spacing between elements */
+    }
+
+    .first-text {
+    position: relative;
+    width: 300px; /* Maintain the fixed width */
+    text-align: center; /* Ensures the text and button align to the left */
+}
+
+    .second-text {
+        position: relative;
+        flex-direction: column;
+        align-items: center; /* Aligns text to the left */
+        width: 350px;
+        height: 150px; /* Adjust height to accommodate text and button */
+        left: 24%;
+        bottom: 0%;
+    }
+
+    .center-image {
+    width: 500px;
+    z-index: 2; /* Keeps the center image above the dog */
+}
+    .dog-div {
+        display: none; /* Hide dog image */
+    }
+
+}
+
+/* General Section Styling */
+.section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    scroll-snap-align: start; /* Snap alignment */
+    scroll-snap-stop: always; /* Ensure snapping happens */
+}
+
+/* Section-Specific Styling */
+#section-1 {
+    position: relative;
+    height: 95vh; /* Full viewport height */
+}
+
+/* Section 2: Join Our Community */
+#section-2 {
+    background-color: #E9DFC9;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+#section-2 h2 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #404040;
+    margin-bottom: 20px;
+}
+
+#section-2 p {
+    font-size: 16px;
+    color: #555555;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 40px;
+}
+
+.highlights {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.highlight-item {
+    flex: 1 1 calc(33% - 100px);
+    max-width: 250px;
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 18px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+}
+
+.highlight-item i {
+    font-size: 36px;
+    color: #0D92F4;
+    margin-top: 20px;
+}
+
+.highlight-item h3 {
+    font-size: 20px;
+    color: #404040;
+    margin-bottom: 10px;
+}
+
+.highlight-item p {
+    font-size: 14px;
+    color: #555555;
+    line-height: 1.6;
+}
+
+/* Section 3 */
+#section-3 {
+    background-color: #D8E9F0;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+html {
+    scroll-behavior: auto; /* Disable global auto-scroll */
+}
+
+/* Footer Styles */
+.footer {
+    background-color: #f6f2e9; /* Matches the site background */
+    border-top: 2px solid #e9dfc9;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    position: relative;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #0d92f4; /* Match the site's primary color */
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #44b657; /* Subtle hover effect */
+}
+
+/* Social Media Icons */
+.social-media {
+    margin-top: 15px;
+}
+
+.social-icon {
+    display: inline-block;
+    margin: 0 10px;
+    color: #555;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+.social-icon:hover {
+    color: #0d92f4; /* Match the site's primary color */
+}
+
+/* Adoption Section Container */
+.adoption-container {
+    max-width: 1000px; /* Limit the container width */
+    margin: 0 auto; /* Center the container horizontally */
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin-top: 120px;
+    min-height: 85vh; /* Minimum height of 85% viewport height */
+    margin-bottom: 20px;
+}
+
+

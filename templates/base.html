@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SophieBoca{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/MainStyles.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='media/Icon.ico') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/MainScripts.js') }}"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    {% include 'navbar.html' %}
+
+    <!-- Page Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    {% if logged_out %}
+        <script>
+            alert("You were successfully logged out.");
+        </script>
+    {% endif %}
+
+    <!-- Footer -->
+    {% include 'footer.html' %}
+</body>
+</html>

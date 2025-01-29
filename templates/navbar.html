@@ -1,0 +1,23 @@
+<nav class="navbar">
+    <div class="logo">
+        <a href="{{ url_for('homepage.index') }}">
+            <img src="{{ url_for('static', filename='media/Logo.png') }}" alt="Logo" class="logo">
+        </a>
+    </div>
+    <button class="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <ul class="nav-links">
+        <li><a href="{{ url_for('homepage.index') }}" class="{% if active_page == 'homepage' %}active{% endif %}">Home</a></li>
+        <li><a href="{{ url_for('pets.index') }}" class="{% if active_page == 'pets' %}active{% endif %}">Pets</a></li>
+        <li><a href="#" class="{% if active_page == 'about' %}active{% endif %}">About</a></li>
+        <li><a href="#" class="{% if active_page == 'contact' %}active{% endif %}">Contact Us</a></li>
+    </ul>
+    {% if is_logged_in %}
+        <a href="{{ url_for('login.logout') }}" class="login-btn">Log out</a>
+    {% else %}
+        <a href="{{ url_for('login.index') }}" class="login-btn">Log in</a>
+    {% endif %}
+</nav>

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - SophieBoca{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/FormsStyles.css') }}">
+    <script src="{{ url_for('sign_up.static', filename='js/Valid_signUp.js') }}"></script>
+    <!-- Account Container -->
+    <div class="account-container">
+        <h1>Create an account</h1>
+        <p>
+            Creating an account with "SophieBoca" will give the access to view 1000+ pets
+            and find your favorite pet faster!
+        </p>
+
+        <form id="createAccountForm">
+            <div class="input-group">
+                <input type="text" id="createName" placeholder="Name" required>
+            </div>
+            <div class="input-group">
+                <input type="email" id="createEmail" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="createPassword" placeholder="Password" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="createConfirmPassword" placeholder="Confirm Password" required>
+            </div>
+            <button class="sign-up-btn" type="submit">Sign up</button>
+        </form>
+
+
+    </div>
+{% endblock %}

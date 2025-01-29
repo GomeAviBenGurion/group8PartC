@@ -1,0 +1,101 @@
+/* Filter Bar */
+.filter-bar {
+    display: flex;
+    justify-content: space-between; /* Space out elements to pin to edges */
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.filter-buttons-group {
+    display: flex;
+    gap: 15px; /* Space between the left-side buttons */
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #E9DFC9;
+    color: #404040;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filter-btn:hover {
+    background-color: #D0C4A5;
+}
+
+
+.search-by-photo-btn {
+    background-color: #0D92F4;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-by-photo-btn:hover {
+    background-color: #0A6DC4;
+}
+
+.search-text {
+    display: inline; /* Default: text is visible */
+}
+
+.search-text.hidden {
+    display: none; /* Hide text on smaller screens */
+}
+
+/* Dogs Grid */
+.dogs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(201px, 1fr)); /* Responsive columns */
+    gap: 20px;
+    width: 100%; /* Full width of the container */
+    margin: 0 auto;
+}
+
+.dog-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    text-decoration: none; /* Remove underline from links */
+
+}
+
+.dog-image {
+    width: 200px;
+    height: 150px;
+    background-color: #C4DFF6;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    background-size: cover; /* Scale the image proportionally to cover the container */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Avoid tiling the image */
+}
+
+.dog-details {
+    display: flex;
+    align-items: center; /* Vertically align items */
+    justify-content: flex-start; /* Pin items to the left */
+    gap: 10px; /* Add space between the icon and the name */
+    width: 100%; /* Ensure it stretches across the card */
+    font-size: 18px;
+    font-weight: bold;
+    color: #404040;
+}
+
+.hidden {
+    display: none;
+}

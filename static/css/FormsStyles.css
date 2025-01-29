@@ -1,0 +1,254 @@
+.login-container, .account-container, .partner-container, .contact-container, .add-dog-container {
+    background-color: #F6F2E9;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 400px;
+    text-align: center;
+    /* Centers the container */
+    margin: 120px auto 100px;
+}
+
+.login-container h1, .account-container h1, .partner-container h1 , .contact-container h1, .add-dog-container h1{
+    font-family: 'Berlin Sans FB Demi', sans-serif;
+    font-weight: bold;
+    font-size: 32px;
+    color: #2c2c3e;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.login-container p , .account-container p, .partner-container p, .contact-container p, .add-dog-container p {
+    color: #6b6a74;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.google-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;
+    padding: 12px;
+    margin-bottom: 25px;
+    cursor: pointer;
+    background-color: white;
+    font-weight: bold;
+}
+
+.google-login img {
+    width: 24px;
+    margin-right: 12px;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 25px 0;
+    color: #bfbfbf;
+    font-size: 14px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #e0e0e0;
+    margin: 0 10px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group.split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+
+.input-group input, .input-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d1d1;
+    border-radius: 25px;
+    box-sizing: border-box;
+}
+
+.input-group textarea {
+    resize: none;
+    height: 150px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.forgot-password {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.forgot-password a {
+    color: #bfbfbf;
+    text-decoration: none;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+.signup {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.signup a, .sign-up-link {
+    color: #44b657;
+    font-weight: bold;
+    text-decoration: underline;
+    text-underline: #44B657;
+
+}
+
+.signup a:hover, .sign-up-link:hover {
+    text-decoration: underline;
+}
+
+.login-button {
+    background-color: #0D92F4;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: "Berlin Sans FB Demi",sans-serif;
+    width: 100%;
+}
+
+.login-button:hover, .sign-up-btn:hover, .send-btn:hover {
+    background-color: #1f1f2d;
+}
+
+/*the design of create account*/
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d1d1;
+    border-radius: 25px;
+    box-sizing: border-box;
+}
+
+.back-link {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #2c2c3e;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.sign-up-btn, .send-btn {
+    background-color: #0D92F4;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: "Berlin Sans FB Demi", sans-serif;
+    width: 100%;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* Added margin to move button down */
+}
+
+
+.partner-container p {
+    color: #6b6a74;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+/*for the addDog*/
+
+.upload-area {
+    background-color: white;
+    border: 2px dashed #d1d1d1;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex; /* Use flexbox */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #6b6a74;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.upload-icon {
+    font-size: 24px;
+    color: #6b6a74;
+    display: block;
+    margin-bottom: 10px;
+}
+
+ select {
+     appearance: none;
+     border: 1px solid #ccc;
+     border-radius: 25px;
+     padding: 10px;
+     font-size: 13px;
+     width: 100%;
+     box-sizing: border-box;
+     background-color: #fff;
+     cursor: pointer;
+     color: #81807F; /* Text color for items */
+ }
+
+select option {
+    color: #000; /* Black text for dropdown options */
+}
+
+select:focus,
+select:valid {
+    color: #000; /* Black text */
+}
+
+.image-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.image-preview img {
+    max-width: 110px;
+    max-height: 110px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.input-group.split {
+    display: flex;
+    gap: 10px;
+}
+
+.input-group.split .input-half {
+    flex: 1;
+}

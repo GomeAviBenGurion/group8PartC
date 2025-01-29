@@ -1,0 +1,169 @@
+.dog-info-container {
+            max-width: 1000px;
+            margin: 100px auto;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            overflow: hidden;
+        }
+
+.dog-photos {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+.dog-photos .large-photo {
+            width: 1500px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+.dog-photos .small-photos {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+.dog-photos .small-photos img {
+            width: 400px;
+            height: 190px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+.dog-info-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+.dog-info-details h1 {
+            grid-column: span 2;
+            font-size: 28px;
+            font-family: "Berlin Sans FB Demi", sans-serif;
+            color: #2c2c3e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: left;
+        }
+
+.dog-info-details h1 .gender-icon {
+            margin-left: 10px;
+            color: #2196F3;
+        }
+
+.dog-detail {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #F6F2E9;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 16px;
+            color: #404040;
+        }
+
+.dog-detail span {
+            font-weight: bold;
+            color: #404040;
+            margin-right: 10px;
+        }
+
+.dog-detail div {
+            text-align: right;
+            font-weight: normal;
+        }
+
+.breed-information {
+            display: grid;
+            grid-template-columns: 2fr 2fr;
+            gap: 20px;
+        }
+
+.breed-information h1 {
+            grid-column: span 2;
+            font-size: 28px;
+            font-family: "Berlin Sans FB Demi", sans-serif;
+            color: #2c2c3e;
+            display: flex;
+            align-items: center;
+            justify-content: left;
+        }
+
+.breed-description {
+            grid-column: span 2;
+            font-size: 16px;
+            margin-bottom: 10px;
+            margin-top: -20px;
+            color: #404040;
+        }
+
+.breed-categories {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+.category-block {
+            background-color: #F6F2E9;
+            border-radius: 15px;
+            padding: 20px;
+            height: 80%;
+        }
+
+.search-by-photo-btn {
+    background-color: #0D92F4;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-by-photo-btn:hover {
+    background-color: #0A6DC4;
+}
+
+.search-text {
+    display: inline; /* Default: text is visible */
+}
+
+.search-text.hidden {
+    display: none; /* Hide text on smaller screens */
+}
+
+@media (max-width: 768px) {
+            .dog-photos {
+                grid-template-columns: 2fr;
+                justify-items: center;
+            }
+
+            .dog-photos .large-photo {
+                height: 200px;
+                width: 400px;
+            }
+
+            .dog-photos .small-photos img {
+                height: 200px;
+                width: 400px;
+            }
+
+            .breed-information {
+                grid-template-columns: 1fr;
+            }
+
+            .category-block {
+                width: 200px;
+            }
+        }
