@@ -3,6 +3,9 @@
 {% block title %}Home - SophieBoca{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{{ url_for('homepage.static', filename='css/HomePageStyles.css') }}">
+<script src="{{ url_for('homepage.static', filename='js/HomePageScript.js') }}"></script>
+
 <section id="section-1" class="section">
     <div class="dog-div">
         <img src="{{ url_for('homepage.static', filename='media/dog.png') }}" alt="Dog" class="dog-image-main">
@@ -71,133 +74,5 @@
     <h2>Adopt a Friend</h2>
     <p>Browse through thousands of pets waiting for a forever home.</p>
 </section>
-
-<style>
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.6);
-        justify-content: center;
-        align-items: center;
-    }
-
-    .modal-content {
-        background-color: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        text-align: center;
-        max-width: 400px;
-        width: 90%;
-    }
-
-    .close-btn {
-        float: right;
-        font-size: 24px;
-        cursor: pointer;
-    }
-
-    .custom-file-upload {
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        width: 60px;
-        height: 60px;
-        border: 2px solid lightgray;
-        border-radius: 50%;
-        cursor: pointer;
-        color: lightgray;
-        font-size: 24px;
-        transition: all 0.3s ease;
-        background-size: cover;
-        background-position: center;
-    }
-
-    .custom-file-upload.uploaded {
-        width: 100px;
-        height: 100px;
-    }
-
-    .custom-file-upload:hover {
-        background-color: rgba(211, 211, 211, 0.2);
-    }
-
-    .custom-file-upload input[type="file"] {
-        display: none;
-    }
-
-    #fileName {
-        margin-top: 10px;
-        font-style: italic;
-    }
-
-    #predict-btn {
-        margin-top: 20px;
-    }
-</style>
-
-<script>
-    document.getElementById('search-by-photo-btn').onclick = function() {
-        document.getElementById('uploadModal').style.display = 'flex';
-    };
-
-    document.querySelector('.close-btn').onclick = function() {
-        document.getElementById('uploadModal').style.display = 'none';
-    };
-
-    window.onclick = function(event) {
-        const modal = document.getElementById('uploadModal');
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    };
-
-    document.getElementById('imageUpload').onchange = function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const uploadLabel = document.querySelector('.custom-file-upload');
-                uploadLabel.style.backgroundImage = `url('${e.target.result}')`;
-                uploadLabel.classList.add('uploaded');
-                uploadLabel.querySelector('i').style.display = 'none';
-            };
-            reader.readAsDataURL(file);
-
-            document.getElementById('fileName').innerText = file.name;
-        }
-    };
-
-    document.getElementById('predict-btn').onclick = function() {
-        const fileInput = document.getElementById('imageUpload');
-        const file = fileInput.files[0];
-
-        if (file) {
-            const formData = new FormData();
-            formData.append('file', file);
-
-            fetch('/predict', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.breed) {
-                    document.getElementById('breedResult').innerText = `Predicted Breed: ${data.breed}`;
-                } else {
-                    document.getElementById('breedResult').innerText = 'Could not identify the breed.';
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        } else {
-            alert('Please upload an image first.');
-        }
-    };
-</script>
 
 {% endblock %}
