@@ -1,6 +1,26 @@
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('search-by-photo-btn').onclick = function() {
-        document.getElementById('uploadModal').style.display = 'flex';
+    // Check login status before opening the upload modal
+    document.getElementById('search-by-photo-btn').onclick = async function() {
+        try {
+            let response = await fetch('/check-login');
+            let data = await response.json();
+
+            if (!data.logged_in) {
+                alert('You must be logged in to use this feature.');
+                window.location.href = '/login';
+                return;
+            }
+
+            document.getElementById('uploadModal').style.display = 'flex';
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while checking login status.');
+        }
+    };
+
+    // Alert when "Join Community" is clicked
+    document.getElementById('join-community-btn').onclick = function() {
+        alert('Oops! This feature isn\'t ready yet. We\'re still teaching our tech dogs how to build it. 🐶');
     };
 
     document.querySelector('.close-btn').onclick = function() {
@@ -25,34 +45,37 @@ document.addEventListener('DOMContentLoaded', function() {
                 uploadLabel.querySelector('i').style.display = 'none';
             };
             reader.readAsDataURL(file);
-
-            document.getElementById('fileName').innerText = file.name;
         }
     };
 
-    document.getElementById('predict-btn').onclick = function() {
+    document.getElementById('predict-btn').onclick = async function() {
         const fileInput = document.getElementById('imageUpload');
         const file = fileInput.files[0];
 
-        if (file) {
-            const formData = new FormData();
-            formData.append('file', file);
+        if (!file) {
+            alert('Please upload an image first.');
+            return;
+        }
 
-            fetch('/predict', {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            let response = await fetch('/predict', {
                 method: 'POST',
                 body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.breed) {
-                    document.getElementById('breedResult').innerText = `Predicted Breed: ${data.breed}`;
-                } else {
-                    document.getElementById('breedResult').innerText = 'Could not identify the breed.';
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        } else {
-            alert('Please upload an image first.');
+            });
+
+            let data = await response.json();
+
+            if (response.ok) {
+                document.getElementById('breedResult').innerText = `Predicted Breed: ${data.breed}`;
+            } else {
+                document.getElementById('breedResult').innerText = 'Could not identify the breed.';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while processing your request.');
         }
     };
 });

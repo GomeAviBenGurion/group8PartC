@@ -12,21 +12,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Function to toggle the visibility of the "Search by photo" text based on screen width
-    function toggleSearchText() {
-        const searchText = document.querySelector(".search-by-photo-btn .search-text");
-        if (searchText) {
-            if (window.innerWidth <= 705) {
-                searchText.classList.add("hidden");
-            } else {
-                searchText.classList.remove("hidden");
-            }
-        } else {
-            console.log("Search text element not found.");
-        }
-    }
-
-    // Run the toggleSearchText function on page load and when resizing the window
-    toggleSearchText();
-    window.addEventListener('resize', toggleSearchText);
 });

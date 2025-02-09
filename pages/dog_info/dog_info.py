@@ -22,6 +22,7 @@ dogs = [
      }
 ]
 
+
 # Route to render dog info page
 @dog_info.route('/dog_info')
 def index():

@@ -41,5 +41,23 @@ document.addEventListener("DOMContentLoaded", () => {
         overlay.appendChild(closeButton);
         document.body.appendChild(overlay);
     };
+
+    document.getElementById('adopt-btn').onclick = async function() {
+        try {
+            let response = await fetch('/check-login');
+            let data = await response.json();
+
+            if (!data.logged_in) {
+                alert('You need to register or log in before adopting a dog.');
+                window.location.href = '/login';
+                return;
+            }
+
+            document.getElementById('uploadModal').style.display = 'flex';
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while checking login status.');
+        }
+    };
 });
 

@@ -39,14 +39,13 @@ def predict_breed(image):
     predictions = model(img_array).numpy().flatten()
 
     # Filter for dog breed classes (ImageNet classes 151-268)
-    dog_breed_indices = range(151, 269)
-    dog_predictions = {i: predictions[i] for i in dog_breed_indices}
+    dog_breed_indices = np.argmax(predictions)
+    dog_predictions = str(dog_breed_indices)
 
     # Get the class with the highest confidence score within dog breeds
     if dog_predictions:
-        best_match = max(dog_predictions, key=dog_predictions.get)
-        breed_name = imagenet_classes[str(best_match)][1]
-        return breed_name
+        original_breed = imagenet_classes[dog_predictions][1]
+        return original_breed
     else:
         return "Unknown Breed"
 
@@ -79,3 +78,10 @@ def predict():
         return jsonify({'breed': breed})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+@homepage.route('/check-login', methods=['GET'])
+def check_login():
+    """Check if the user is logged in."""
+    return jsonify({'logged_in': session.get('logged_in', False)})
+

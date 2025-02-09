@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Home - SophieBoca{% endblock %}
+{% block title %}Pets{% endblock %}
 
 {% block content %}
     <link rel="stylesheet" href="{{ url_for('pets.static', filename='css/PetsStyles.css') }}">
@@ -19,10 +19,7 @@
                     <button class="filter-btn filter-option">Size</button>
                     <button class="filter-btn filter-option">Age</button>
                 </div>
-                <button class="filter-btn search-by-photo-btn" id="search-by-photo-btn">
-                    <i class="fa fa-camera"></i>
-                    <span class="search-text"> Search by photo</span>
-                </button>
+
             </div>
 
             <!-- Dogs Grid -->

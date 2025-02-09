@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Dog Information - SophieBoca{% endblock %}
+{% block title %}Dog Information{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('dog_info.static', filename='css/DogInfoStyles.css') }}">
@@ -57,22 +57,6 @@
                     <span class="search-text" style="color: #fff; margin-left: 10px;">I want to adopt!</span>
                 </button>
             </div>
-
-            <script>
-                const isLoggedIn = {{ is_logged_in | tojson | safe }}; // Ensures safe JSON output
-
-                document.getElementById("adopt-btn").addEventListener("click", () => {
-                    if (isLoggedIn) {
-                        alert("Your adoption request has been sent! 🐾 The association will contact you soon - probably after giving some belly rubs! 🐶");
-                        window.location.href = "/"; // Redirect to homepage
-                    } else {
-                        alert("You need to register or log in before adopting a dog.");
-                        window.location.href = "/login"; // Redirect to login page
-                    }
-                });
-            </script>
-
-
         </div>
     </div>
 </div>

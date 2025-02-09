@@ -27,31 +27,6 @@
     background-color: #D0C4A5;
 }
 
-
-.search-by-photo-btn {
-    background-color: #0D92F4;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.search-by-photo-btn:hover {
-    background-color: #0A6DC4;
-}
-
-.search-text {
-    display: inline; /* Default: text is visible */
-}
-
-.search-text.hidden {
-    display: none; /* Hide text on smaller screens */
-}
-
 /* Dogs Grid */
 .dogs-grid {
     display: grid;
@@ -71,11 +46,10 @@
     padding: 20px;
     text-align: center;
     text-decoration: none; /* Remove underline from links */
-
 }
 
 .dog-image {
-    width: 200px;
+    width: 97%;
     height: 150px;
     background-color: #C4DFF6;
     border-radius: 15px;
