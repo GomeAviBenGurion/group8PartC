@@ -43,21 +43,27 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     document.getElementById('adopt-btn').onclick = async function() {
-        try {
-            let response = await fetch('/check-login');
-            let data = await response.json();
+    try {
+        let response = await fetch('/check-login');
+        let data = await response.json();
+        console.log('Login check response:', data); // Debugging
 
-            if (!data.logged_in) {
-                alert('You need to register or log in before adopting a dog.');
-                window.location.href = '/login';
-                return;
-            }
-
-            document.getElementById('uploadModal').style.display = 'flex';
-        } catch (error) {
-            console.error('Error:', error);
-            alert('An error occurred while checking login status.');
+        if (!data.logged_in) {
+            alert('You need to register or log in before adopting a dog.');
+            window.location.href = '/login';
+            return;
         }
-    };
+
+        // If user is logged in, show a success message
+        alert("Adoption request has been sent successfully!");
+        window.location.href = '/pets';
+
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while checking login status.');
+    }
+};
+
 });
 

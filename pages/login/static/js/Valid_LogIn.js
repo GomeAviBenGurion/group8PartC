@@ -1,6 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById("loginForm");
 
+
+    // Alert when "Google" is clicked
+    document.getElementById('google-login-btn').onclick = function() {
+        alert('Oops! This feature isn\'t ready yet. We\'re still teaching our tech dogs how to build it. 🐶');
+    };
+
+    // Alert when "Forgot Password" is clicked
+    document.getElementById('forgot-password').onclick = function() {
+        alert('Oops! This feature isn\'t ready yet. We\'re still teaching our tech dogs how to build it. 🐶');
+    };
+
     function validateEmail(email) {
         return true
     }
