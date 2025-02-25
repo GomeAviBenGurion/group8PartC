@@ -1,9 +1,10 @@
-from flask import Flask, session, redirect, url_for
+from flask import Flask, session
 from pages.homepage.homepage import homepage
 from pages.pets.pets import pets
 from pages.login.login import login
 from pages.sign_up.sign_up import sign_up
 from pages.dog_info.dog_info import dog_info
+from database import adopters_col  # Import database connection
 
 
 app = Flask(__name__)

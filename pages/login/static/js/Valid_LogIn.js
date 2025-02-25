@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById("loginForm");
 
-
     // Alert when "Google" is clicked
     document.getElementById('google-login-btn').onclick = function() {
         alert('Oops! This feature isn\'t ready yet. We\'re still teaching our tech dogs how to build it. 🐶');
@@ -12,10 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
         alert('Oops! This feature isn\'t ready yet. We\'re still teaching our tech dogs how to build it. 🐶');
     };
 
-    function validateEmail(email) {
-        return true
-    }
-
     if (loginForm) {
         loginForm.addEventListener("submit", async function (event) {
             event.preventDefault(); // Prevent default form submission behavior
@@ -23,8 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const email = document.getElementById("email").value.trim();
             const password = document.getElementById("logInPassword").value.trim();
 
-            // Validate email and password
-            if (validateEmail(email) && password) {
+            if (email && password) {
                 try {
                     // Use fetch API for AJAX call
                     const response = await fetch('/login', {
@@ -49,8 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.error("Error during login:", error);
                     alert("An error occurred. Please try again.");
                 }
-            } else if (!password) {
-                alert("Password field is required!");
+            } else {
+                alert("Both email and password are required!");
             }
         });
     } else {

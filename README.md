@@ -117,8 +117,8 @@ The forms on the site include several input validations to ensure data integrity
 - Login Form: Ensures email and password fields are correctly formatted and not empty. Password strength is not re-verified, as it was validated during registration.
 
 These validations offer real-time feedback, guiding users to correct any mistakes or omissions during input.
-#   g r o u p 8 P a r t C 
- 
- #   g r o u p 8 P a r t C 
+
+ ---
+ #   Part C
  
  
