@@ -9,18 +9,41 @@
         <div class="adoption-container">
 
             <!-- Filter Bar -->
-            <div class="filter-bar">
-                <div class="filter-buttons-group">
-                    <button class="filter-btn toggle-btn">
-                        <i class="fa fa-sliders-h"></i>
-                    </button>
-                    <button class="filter-btn filter-option">Breed</button>
-                    <button class="filter-btn filter-option">Gender</button>
-                    <button class="filter-btn filter-option">Size</button>
-                    <button class="filter-btn filter-option">Age</button>
-                </div>
+<div class="filter-bar">
+    <div class="filter-buttons-group">
+        <button class="filter-btn toggle-btn" style="min-width: 40px">
+            <i class="fa fa-sliders-h"></i>
+        </button>
 
+        <!-- Breed Dropdown -->
+        <div class="dropdown">
+            <button class="filter-btn filter-option" id="breedButton">Breed</button>
+            <div class="dropdown-menu" id="breedList">
+                <input type="text" id="breedSearch" class="search-bar" placeholder="Search breeds...">
+                <ul id="breedItems"></ul>
             </div>
+        </div>
+
+        <!-- Gender Dropdown -->
+        <div class="dropdown">
+            <button class="filter-btn filter-option" id="genderButton">Gender</button>
+            <ul class="dropdown-menu" id="genderList"></ul>
+        </div>
+
+        <!-- Size Dropdown -->
+        <div class="dropdown">
+            <button class="filter-btn filter-option" id="sizeButton">Size</button>
+            <ul class="dropdown-menu" id="sizeList"></ul>
+        </div>
+
+        <!-- Age Dropdown -->
+        <div class="dropdown">
+            <button class="filter-btn filter-option" id="ageButton">Age</button>
+            <ul class="dropdown-menu" id="ageList"></ul>
+        </div>
+    </div>
+</div>
+
 
             <!-- Dogs Grid -->
             <div class="dogs-grid">

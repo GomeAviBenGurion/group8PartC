@@ -1,16 +1,22 @@
-/* Filter Bar */
+/* ============================
+   Filter Bar - Button Styling
+   ============================ */
 .filter-bar {
     display: flex;
-    justify-content: space-between; /* Space out elements to pin to edges */
     align-items: center;
+    gap: 15px; /* Ensures equal spacing between buttons */
+    justify-content: left;
     margin-bottom: 20px;
+    margin-top: -30px;
 }
 
+/* Grouped filter buttons */
 .filter-buttons-group {
     display: flex;
-    gap: 15px; /* Space between the left-side buttons */
+    gap: 15px; /* Space between buttons */
 }
 
+/* Standard filter buttons */
 .filter-btn {
     padding: 10px 20px;
     border: none;
@@ -21,21 +27,128 @@
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .filter-btn:hover {
     background-color: #D0C4A5;
 }
 
-/* Dogs Grid */
+/* Fix Dropdown button alignment */
+.dropdown {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* All filter buttons adapt dynamically */
+.filter-btn.dynamic {
+    min-width: 50px;
+    max-width: 250px;
+    padding: 10px 15px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+}
+
+/* Highlight selected filter */
+.selected {
+    background-color: #2196F3 !important;
+    color: white !important;
+}
+
+/* ============================
+   Dropdown Styling (Fixed Width)
+   ============================ */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 180px; /* Set a fixed width for uniformity (Adjust as needed) */
+    max-height: 250px;
+    overflow-y: auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 5px 0;
+    z-index: 100;
+    display: none;
+}
+
+/* Dropdown menu list */
+.dropdown-menu ul {
+    list-style-type: none;
+    padding: 10px;
+    margin: 0;
+}
+
+/* Dropdown list items */
+.dropdown-menu li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-menu li:hover {
+    background-color: #D0C4A5;
+}
+
+/* Ensure uniform button width */
+.filter-btn {
+    min-width: 90px; /* Matches dropdown width */
+}
+
+/* Style the clear selection option */
+.clear-option {
+    font-weight: bold;
+    color: #2196F3;
+    text-align: center;
+}
+
+.clear-option:hover {
+    background-color: #f8d7da;
+}
+
+
+/* ============================
+   Search Bar in Breed Dropdown
+   ============================ */
+.search-bar {
+    width: 90%;
+    padding: 8px;
+    margin: 5px auto;
+    display: block;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    border-radius: 0;
+    font-size: 14px;
+    outline: none;
+}
+
+.search-bar:focus {
+    border-bottom: 2px solid #2196F3;
+}
+
+/* ============================
+   Dogs Grid - Responsive Layout
+   ============================ */
 .dogs-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(201px, 1fr)); /* Responsive columns */
     gap: 20px;
-    width: 100%; /* Full width of the container */
+    width: 100%;
     margin: 0 auto;
 }
 
+/* Dog card styling */
 .dog-card {
     display: flex;
     flex-direction: column;
@@ -45,31 +158,36 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
     text-align: center;
-    text-decoration: none; /* Remove underline from links */
+    text-decoration: none;
 }
 
+/* Dog image styling */
 .dog-image {
     width: 97%;
     height: 150px;
     background-color: #C4DFF6;
     border-radius: 15px;
     margin-bottom: 10px;
-    background-size: cover; /* Scale the image proportionally to cover the container */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Avoid tiling the image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
+/* Dog details layout */
 .dog-details {
     display: flex;
-    align-items: center; /* Vertically align items */
-    justify-content: flex-start; /* Pin items to the left */
-    gap: 10px; /* Add space between the icon and the name */
-    width: 100%; /* Ensure it stretches across the card */
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
     font-size: 18px;
     font-weight: bold;
     color: #404040;
 }
 
+/* ============================
+   Utility Classes
+   ============================ */
 .hidden {
     display: none;
 }
