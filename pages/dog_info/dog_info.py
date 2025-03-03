@@ -27,6 +27,6 @@ dogs = [
 @dog_info.route('/dog_info')
 def index():
     is_logged_in = session.get('logged_in', False)  # Defaults to False if not logged in
-    return render_template("dog_info.html", dog=dogs[0], is_logged_in=is_logged_in)
+    return render_template("my_requests.html", dog=dogs[0], is_logged_in=is_logged_in)
 
 
