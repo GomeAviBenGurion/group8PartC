@@ -42,28 +42,35 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.appendChild(overlay);
     };
 
-    document.getElementById('adopt-btn').onclick = async function() {
-    try {
-        let response = await fetch('/check-login');
-        let data = await response.json();
-        console.log('Login check response:', data); // Debugging
+     document.getElementById('adopt-btn').onclick = async function() {
+        const dogId = window.location.pathname.split("/").pop(); // Extract dog_id from URL
 
-        if (!data.logged_in) {
-            alert('You need to register or log in before adopting a dog.');
-            window.location.href = '/login';
-            return;
+        try {
+            let response = await fetch('/adopt/' + dogId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            let result = await response.json();
+            console.log("Adoption response:", result); // Debugging
+
+            if (response.status === 401 && result.error === "User not logged in") {
+                alert("You need to log in before adopting a dog.");
+                window.location.href = '/login?message=' + encodeURIComponent("Please log in to submit an adoption request.");
+                return;
+            }
+
+            if (response.ok) {
+                alert(result.message);
+                window.location.href = '/my_requests'; // Redirect to My Requests page
+            } else {
+                alert(result.error); // Show specific error message (e.g., "Already requested")
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred while submitting the adoption request.");
         }
-
-        // If user is logged in, show a success message
-        alert("Adoption request has been sent successfully!");
-        window.location.href = '/pets';
-
-
-    } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred while checking login status.');
-    }
-};
-
+    };
 });
-

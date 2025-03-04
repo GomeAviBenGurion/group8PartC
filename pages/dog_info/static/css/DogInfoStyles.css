@@ -1,6 +1,16 @@
 .dog-info-container {
             max-width: 1000px;
-            margin: 100px auto;
+            margin: 100px auto 0px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            overflow: hidden;
+        }
+
+.dog-info-container2 {
+            max-width: 1000px;
+            margin: 20px auto;
             background-color: #fff;
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);

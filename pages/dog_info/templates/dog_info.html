@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Dog Information{% endblock %}
+{% block title %}{{ dog.name }}'s Information{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('dog_info.static', filename='css/DogInfoStyles.css') }}">
@@ -19,7 +19,7 @@
 
     <div class="dog-info-details">
         <h1>{{ dog.name }}
-            {% if dog.gender == 'male' %}
+            {% if dog.sex == 'male' %}
                 <i class="fa fa-mars gender-icon"></i>
             {% else %}
                 <i class="fa fa-venus gender-icon"></i>
@@ -27,29 +27,31 @@
         </h1>
         <div class="dog-detail"><span>Breed:</span><div>{{ dog.breed }}</div></div>
         <div class="dog-detail"><span>Size:</span><div>{{ dog.size }}</div></div>
-        <div class="dog-detail"><span>Age:</span><div>{{ dog.age }}</div></div>
-        <div class="dog-detail"><span>Energy Level:</span><div>{{ dog.energy_level }}</div></div>
-        <div class="dog-detail"><span>Trainability:</span><div>{{ dog.trainability }}</div></div>
-        <div class="dog-detail"><span>Sterilized:</span><div>{{ dog.sterilized }}</div></div>
+        <div class="dog-detail"><span>Age:</span><div>{{ dog.age }}</div></div>        <div class="dog-detail"><span>Energy Level:</span><div>{{ breed_details.energy_level_category }}</div></div>
+        <div class="dog-detail"><span>Trainability:</span><div>{{ dog.training_level }}</div></div>
+        <div class="dog-detail"><span>Sterilized:</span><div>{{ "Yes" if dog.sterilized else "No" }}</div></div>
     </div>
 </div>
 
-<div class="dog-info-container" style="margin-top: -80px;">
+<!-- Breed Information Section -->
+<div class="dog-info-container2">
     <div class="breed-information">
         <h1>Breed Information</h1>
         <div class="breed-description">
-            {{ dog.breed_description }}
+            {{ breed_details.description }}
         </div>
         <div class="breed-categories">
-            <div class="dog-detail"><span>Temperament:</span><div>{{ dog.temperament }}</div></div>
-            <div class="dog-detail"><span>Shedding Category:</span><div>{{ dog.shedding_category }}</div></div>
-            <div class="dog-detail"><span>Trainability Category:</span><div>{{ dog.trainability_category }}</div></div>
-            <div class="dog-detail"><span>Grooming Category:</span><div>{{ dog.grooming_category }}</div></div>
+            <div class="dog-detail"><span>Temperament:</span><div>{{ breed_details.temperament }}</div></div>
+            <div class="dog-detail"><span>Shedding Category:</span><div>{{ breed_details.shedding_category }}</div></div>
+            <div class="dog-detail"><span>Trainability Category:</span><div>{{ breed_details.trainability_category }}</div></div>
+            <div class="dog-detail"><span>Grooming Category:</span><div>{{ breed_details.grooming_category }}</div></div>
         </div>
+
+        <!-- Association Info Block -->
         <div class="category-block">
             <h1 style="margin-bottom: 10px; margin-top: -5px; font-size: 20px;">Association Info</h1>
-            <div class="dog-detail"><span>Name:</span><div>{{ dog.association_name }}</div></div>
-            <div class="dog-detail"><span>Address:</span><div>{{ dog.association_address }}</div></div>
+            <div class="dog-detail"><span>Name:</span><div>{{ association_info.name }}</div></div>
+            <div class="dog-detail"><span>Address:</span><div>{{ association_info.address }}</div></div>
 
             <div class="dog-detail">
                 <button class="filter-btn search-by-photo-btn" id="adopt-btn" style="width: 100%; margin-bottom: -15px; padding: 10px 20px;">
@@ -60,4 +62,5 @@
         </div>
     </div>
 </div>
+
 {% endblock %}

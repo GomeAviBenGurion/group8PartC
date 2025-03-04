@@ -51,16 +51,17 @@
 
             <!-- Dogs Grid -->
         <div class="dogs-grid">
-        {% for dog in dogs %}
-            <a href="{{ url_for('dog_info.index', dog_id=dog._id) }}" class="dog-card">
-                <div class="dog-image" style="background-image: url('{{ dog.photo }}');"></div>
-                <div class="dog-details">
-                    <div class="dog-gender">{{ gender_icons[dog.gender] | safe }}</div>
-                    <div class="dog-name">{{ dog.name }}</div>
-                </div>
-            </a>
-        {% endfor %}
-     </div>
+    {% for dog in dogs %}
+        <a href="{{ url_for('dog_info.index', dog_id=dog._id) }}" class="dog-card">
+            <div class="dog-image" style="background-image: url('{{ dog.photo }}');"></div>
+            <div class="dog-details">
+                <div class="dog-gender">{{ gender_icons[dog.gender] | safe }}</div>
+                <div class="dog-name">{{ dog.name }}</div>
+            </div>
+        </a>
+    {% endfor %}
+</div>
+
 
 
 
