@@ -3,21 +3,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Buttons and dropdowns
     const toggleButton = document.querySelector(".toggle-btn");
-    const filterButtonsGroup = document.querySelector(".filter-buttons-group");
-    const filterButtons = document.querySelectorAll(".filter-option"); // Selects all filter buttons
+    const filterButtons = document.querySelectorAll(".filter-option"); // Select all filter buttons
+    const applyFiltersButton = document.getElementById("applyFilters");
 
     const breedButton = document.getElementById("breedButton");
-    const breedList = document.getElementById("breedList");
-    const breedItemsContainer = document.getElementById("breedItems");
-    const breedSearch = document.getElementById("breedSearch");
-
     const genderButton = document.getElementById("genderButton");
-    const genderList = document.getElementById("genderList");
-
     const sizeButton = document.getElementById("sizeButton");
-    const sizeList = document.getElementById("sizeList");
-
     const ageButton = document.getElementById("ageButton");
+
+    const breedList = document.getElementById("breedList");
+    const genderList = document.getElementById("genderList");
+    const sizeList = document.getElementById("sizeList");
     const ageList = document.getElementById("ageList");
 
     let breeds = []; // Store breeds globally
@@ -35,20 +31,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     });
 
-    // Load breeds once on page load
+    // Load breeds dynamically from available dogs
     try {
         const response = await fetch("/breeds");
         let rawBreeds = await response.json();
-        console.log("Breeds loaded (raw):", rawBreeds);
+        console.log("Available breeds:", rawBreeds);
 
         if (!Array.isArray(rawBreeds)) {
             console.error("Error: Received invalid data from backend:", rawBreeds);
             return;
         }
 
-        // Remove duplicates and sort alphabetically
-        breeds = [...new Set(rawBreeds.map(breed => breed.trim()))].sort();
-        console.log("Breeds after deduplication:", breeds);
+        // Sort breeds alphabetically
+        breeds = [...new Set(rawBreeds)].sort();
+        console.log("Breeds after sorting:", breeds);
 
         populateBreedDropdown(); // Call function to populate breed dropdown
     } catch (error) {
@@ -87,11 +83,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         clearOption.textContent = "Clear Selection";
         clearOption.classList.add("clear-option");
         clearOption.addEventListener("click", () => {
-            breedButton.textContent = breedButton.dataset.defaultText; // Reset button text
-            breedButton.classList.remove("selected"); // Remove selected style
-            breedList.style.display = "none"; // Hide dropdown
-            searchInput.value = ""; // Clear search
-            updateBreedList(breeds); // Restore full list
+            breedButton.textContent = breedButton.dataset.defaultText;
+            breedButton.classList.remove("selected");
+            breedList.style.display = "none";
+            searchInput.value = "";
+            updateBreedList(breeds);
         });
 
         breedList.appendChild(clearOption);
@@ -100,9 +96,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         updateBreedList(breeds);
     }
 
-    // Function to update the Breed list dynamically (Ensuring "Clear Selection" remains)
+    // Function to update the Breed list dynamically
     function updateBreedList(breedArray) {
-        // Remove previous items, keep "Clear Selection" and search bar
         breedList.querySelectorAll(".dropdown-item").forEach(item => item.remove());
 
         breedArray.forEach(breed => {
@@ -111,9 +106,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             li.classList.add("dropdown-item");
 
             li.addEventListener("click", () => {
-                breedButton.textContent = breed; // Update button text
-                breedButton.classList.add("selected"); // Change button color
-                breedList.style.display = "none"; // Hide dropdown
+                breedButton.textContent = breed;
+                breedButton.classList.add("selected");
+                breedList.style.display = "none";
             });
 
             breedList.appendChild(li);
@@ -122,16 +117,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Function to populate non-breed dropdowns
     function populateList(options, container, button) {
-        container.innerHTML = ""; // Clear existing list
+        container.innerHTML = "";
 
-        // Add "Clear Selection" option
         const clearOption = document.createElement("li");
         clearOption.textContent = "Clear Selection";
         clearOption.classList.add("clear-option");
         clearOption.addEventListener("click", () => {
-            button.textContent = button.dataset.defaultText; // Reset button text
-            button.classList.remove("selected"); // Remove selected style
-            container.style.display = "none"; // Hide dropdown
+            button.textContent = button.dataset.defaultText;
+            button.classList.remove("selected");
+            container.style.display = "none";
         });
 
         container.appendChild(clearOption);
@@ -142,14 +136,49 @@ document.addEventListener("DOMContentLoaded", async () => {
             li.classList.add("dropdown-item");
 
             li.addEventListener("click", () => {
-                button.textContent = option; // Update button text
-                button.classList.add("selected"); // Change button color
-                container.style.display = "none"; // Hide dropdown
+                button.textContent = option;
+                button.classList.add("selected");
+                container.style.display = "none";
             });
 
             container.appendChild(li);
         });
     }
+
+    // Fetch and update displayed dogs based on filters
+    async function fetchFilteredDogs() {
+        let queryParams = [];
+
+        if (breedButton.textContent !== "Breed") {
+            queryParams.push(`breed=${encodeURIComponent(breedButton.textContent)}`);
+        }
+        if (genderButton.textContent !== "Gender") {
+            queryParams.push(`gender=${encodeURIComponent(genderButton.textContent.toLowerCase())}`);
+        }
+        if (sizeButton.textContent !== "Size") {
+            queryParams.push(`size=${encodeURIComponent(sizeButton.textContent)}`);
+        }
+        if (ageButton.textContent !== "Age") {
+            queryParams.push(`age=${encodeURIComponent(ageButton.textContent)}`);
+        }
+
+        let queryString = queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
+
+        try {
+            let response = await fetch(`/pets${queryString}`);
+            let htmlContent = await response.text();
+            let parser = new DOMParser();
+            let doc = parser.parseFromString(htmlContent, "text/html");
+            let newDogsGrid = doc.querySelector(".dogs-grid");
+
+            document.querySelector(".dogs-grid").innerHTML = newDogsGrid.innerHTML;
+        } catch (error) {
+            console.error("Error fetching filtered dogs:", error);
+        }
+    }
+
+    // Attach event listener to apply filters
+    applyFiltersButton.addEventListener("click", fetchFilteredDogs);
 
     // Toggle dropdown visibility when clicking buttons
     function toggleDropdown(button, dropdown) {
@@ -173,41 +202,3 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     });
 });
-
-document.addEventListener("DOMContentLoaded", async () => {
-    console.log("DOM fully loaded and parsed");
-
-    // Buttons and dropdowns
-    const toggleButton = document.querySelector(".toggle-btn");
-    const filterButtons = document.querySelectorAll(".filter-option"); // Select all filter buttons
-    const screenWidthThreshold = 768; // Adjust as needed
-
-    let filtersHiddenByScreen = false; // Track whether filters were hidden by screen size
-
-    // Function to check screen size and hide filters if needed
-    function checkScreenSize() {
-        if (window.innerWidth < screenWidthThreshold) {
-            filterButtons.forEach(button => button.classList.add("hidden")); // Hide filters on small screens
-            filtersHiddenByScreen = true; // Mark that they were hidden automatically
-        } else {
-            filterButtons.forEach(button => button.classList.remove("hidden")); // Show filters on larger screens
-            filtersHiddenByScreen = false; // Reset the tracking variable
-        }
-    }
-
-    // Toggle filters manually when clicking the toggle button
-    toggleButton.addEventListener("click", () => {
-        // Only allow toggling if the filters were NOT hidden due to screen size
-        if (filtersHiddenByScreen && window.innerWidth < screenWidthThreshold) {
-            filterButtons.forEach(button => button.classList.remove("hidden"));
-            filtersHiddenByScreen = false;
-        } else {
-            filterButtons.forEach(button => button.classList.toggle("hidden"));
-        }
-    });
-
-    // Run the screen size check on page load and when resizing
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-});
-
