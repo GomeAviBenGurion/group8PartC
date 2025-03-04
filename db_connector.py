@@ -7,3 +7,4 @@ uri = "mongodb+srv://SophieBoca:Boca2025@shopihboca.ib36y.mongodb.net/?retryWrit
 cluster = MongoClient(uri, server_api=ServerApi('1'))
 mydatabase = cluster['SophieBocaDB']
 adopters_col = mydatabase['Adopters']
+requests_col = mydatabase['AdoptionsRequests']

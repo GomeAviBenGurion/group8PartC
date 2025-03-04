@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template, session, jsonify, request
+from bson import ObjectId
+from flask import Blueprint, render_template, session, jsonify, request, redirect, url_for
+from db_connector import requests_col  # Import database connection
 
 # my_requests blueprint definition
 my_requests = Blueprint(
@@ -9,28 +11,50 @@ my_requests = Blueprint(
     template_folder='templates'
 )
 
-# Sample demo data (Replace this with actual database queries)
-sample_requests = [
-    {"id": 1, "dog_name": "Buddy", "status": "Pending", "request_date": "2024-03-01", "image": ""},
-    {"id": 2, "dog_name": "Bella", "status": "Approved", "request_date": "2024-02-20", "image": ""},
-    {"id": 3, "dog_name": "Charlie", "status": "Rejected", "request_date": "2024-02-15", "image": ""}
-]
-
 # Route to render My Requests page
 @my_requests.route('/my_requests')
 def index():
-    is_logged_in = session.get('logged_in', False)
+    if 'user_email' not in session:
+        return redirect(url_for('login.index'))
 
-    return render_template("my_requests.html", is_logged_in=is_logged_in, requests=sample_requests)
+    user_email = session['user_email']
+
+    # Fetch requests from MongoDB
+    adoption_requests = list(requests_col.find({"user_email": user_email}))
+
+    # Convert `_id` to string & ensure `photo` exists
+    for request in adoption_requests:
+        request["_id"] = str(request["_id"])  # Convert ObjectId to string
+        if "photo" not in request or not request["photo"]:
+            request["photo"] = "https://cdn-icons-png.flaticon.com/512/4225/4225925.png"  # Default Image
+
+    return render_template("my_requests.html", is_logged_in=True, requests=adoption_requests)
+
 
 # API Route to cancel a request (update status instead of deleting)
 @my_requests.route('/cancel_request', methods=['POST'])
 def cancel_request():
     request_id = request.json.get('request_id')
 
-    # Simulate status update (Replace this with actual DB update)
-    for req in sample_requests:
-        if req['id'] == request_id:
-            req['status'] = "Cancelled"
+    if not request_id:
+        print("❌ Missing request_id in request")
+        return jsonify({"error": "Missing request_id"}), 400
 
-    return jsonify({"message": "Request status updated to Cancelled", "request_id": request_id})
+    try:
+        object_id = ObjectId(request_id)  # Convert to ObjectId
+        print(f"🔍 Request to cancel: {object_id}")  # Debugging line
+
+        result = requests_col.update_one(
+            {"_id": object_id},  # Query by ObjectId
+            {"$set": {"status": "Cancelled"}}
+        )
+
+        if result.modified_count > 0:
+            print(f"✅ Request {object_id} successfully cancelled.")
+            return jsonify({"message": "Request status updated to Cancelled", "request_id": request_id})
+        else:
+            print(f"⚠️ Request {object_id} not found or already cancelled.")
+            return jsonify({"error": "Request not found or already cancelled"}), 400
+    except Exception as e:
+        print(f"❌ Error in cancel_request: {e}")  # Debugging line
+        return jsonify({"error": str(e)}), 400

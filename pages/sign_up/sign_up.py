@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify
 from werkzeug.security import generate_password_hash
-from database import adopters_col  # Import from database.py
+from db_connector import adopters_col  # Import from db_connector.py
 
 # Define the blueprint
 sign_up = Blueprint(

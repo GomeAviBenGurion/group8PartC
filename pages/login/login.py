@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, session, jsonify, redirect, url_for
 from werkzeug.security import check_password_hash
-from database import adopters_col  # Import database connection
+from db_connector import adopters_col  # Import database connection
 
 # Define the blueprint
 login = Blueprint(

@@ -15,12 +15,14 @@
                 <div class="request-item">
                     <!-- Image placeholder if no image available -->
                     <div class="dog-photo">
-                        {% if request.image %}
-                            <img src="{{ request.image }}" alt="{{ request.dog_name }}" style="width: 100%; height: 100%; border-radius: 50%;">
-                        {% else %}
-                            No Image
-                        {% endif %}
-                    </div>
+                    {% if request.photo %}
+                        <img src="{{ request.photo }}" alt="{{ request.dog_name }}" class="dog-photo">
+                    {% else %}
+                        <img src="https://cdn-icons-png.flaticon.com/512/4225/4225925.png" alt="No Image" class="dog-photo">
+                    {% endif %}
+                </div>
+
+
 
                     <!-- Request details -->
                     <div class="request-details">
@@ -30,7 +32,7 @@
                     </div>
 
                     {% if request.status == "Pending" %}
-                        <button class="cancel-btn" onclick="cancelRequest({{ request.id }})">Cancel Request</button>
+                        <button class="cancel-btn" onclick="cancelRequest('{{ request._id }}')">Cancel Request</button>
                     {% endif %}
                 </div>
             {% endfor %}

@@ -1,4 +1,11 @@
 async function cancelRequest(requestId) {
+    console.log("🚀 Request ID being sent:", requestId);  // Debugging line
+
+    if (!requestId) {
+        alert("Error: Missing request ID.");
+        return;
+    }
+
     if (!confirm("Are you sure you want to cancel this adoption request?")) {
         return;
     }
@@ -9,20 +16,20 @@ async function cancelRequest(requestId) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ request_id: requestId })
+            body: JSON.stringify({ request_id: requestId })  // Ensure `request_id` is being passed
         });
 
         let result = await response.json();
-        console.log(result);
+        console.log("🎯 Server Response:", result);  // Debugging line
 
         if (response.ok) {
-            alert("Request has been cancelled.");
-            location.reload();  // Reload to reflect status change
+            alert("✅ Request has been cancelled.");
+            location.reload();
         } else {
-            alert("Error canceling request. Please try again.");
+            alert("❌ Error canceling request: " + result.error);
         }
     } catch (error) {
-        console.error("Error:", error);
+        console.error("❌ Error:", error);
         alert("An error occurred.");
     }
 }
