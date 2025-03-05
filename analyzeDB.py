@@ -1,6 +1,5 @@
 from db_connector import mydatabase  # Import the existing MongoDB connection
 
-
 def print_collections():
     """ Function to print all collections and their documents """
     print("\n Available Collections in Database:")

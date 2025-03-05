@@ -42,30 +42,27 @@
             <ul class="dropdown-menu" id="ageList"></ul>
         </div>
 
-                <button class="filter-btn apply-btn" id="applyFilters">Apply Filters</button>
+        <button class="filter-btn apply-btn filter-option" id="applyFilters">Apply Filters</button>
+        <button class="filter-btn clear-btn filter-option hidden" id="clearFilters">Clear Filters</button>
 
     </div>
 </div>
-
-
-
-            <!-- Dogs Grid -->
-        <div class="dogs-grid">
-    {% for dog in dogs %}
-        <a href="{{ url_for('dog_info.index', dog_id=dog._id) }}" class="dog-card">
-            <div class="dog-image" style="background-image: url('{{ dog.photo }}');"></div>
-            <div class="dog-details">
-                <div class="dog-gender">{{ gender_icons[dog.gender] | safe }}</div>
-                <div class="dog-name">{{ dog.name }}</div>
+           <!-- Dogs Grid -->
+            <div class="dogs-grid">
+                {% if dogs %}
+                    {% for dog in dogs %}
+                        <a href="{{ url_for('dog_info.index', dog_id=dog._id) }}" class="dog-card">
+                            <div class="dog-image" style="background-image: url('{{ dog.photo }}');"></div>
+                            <div class="dog-details">
+                                <div class="dog-gender">{{ gender_icons[dog.sex] | safe }}</div>
+                                <div class="dog-name">{{ dog.name }}</div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <h2 class="no-dogs-message">No dogs available matching your search criteria.</h2>
+                {% endif %}
             </div>
-        </a>
-    {% endfor %}
-</div>
-
-
-
-
-
         </div>
     </section>
 {% endblock %}

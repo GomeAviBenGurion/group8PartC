@@ -191,3 +191,12 @@
 .hidden {
     display: none;
 }
+
+.no-dogs-message {
+    text-align: center;
+    font-weight: bold;
+    font-size: 28px;
+    font-family: "Berlin Sans FB Demi", sans-serif;
+    color: #2c2c3e;
+    margin-top: 100px;
+}
