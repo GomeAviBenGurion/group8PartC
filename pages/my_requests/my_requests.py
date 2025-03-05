@@ -58,3 +58,23 @@ def cancel_request():
     except Exception as e:
         print(f"❌ Error in cancel_request: {e}")  # Debugging line
         return jsonify({"error": str(e)}), 400
+
+
+# API Route to delete a cancelled request
+@my_requests.route('/delete_request', methods=['POST'])
+def delete_request():
+    request_id = request.json.get('request_id')
+
+    if not request_id:
+        return jsonify({"error": "Missing request_id"}), 400
+
+    try:
+        object_id = ObjectId(request_id)  # Convert to ObjectId
+        result = requests_col.delete_one({"_id": object_id, "status": "Cancelled"})
+
+        if result.deleted_count > 0:
+            return jsonify({"message": "Gone! 🐾 Your request has been deleted successfully. 🗑️", "request_id": request_id})
+        else:
+            return jsonify({"error": "Request not found or not in 'Cancelled' status"}), 400
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400

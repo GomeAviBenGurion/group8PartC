@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let data = await response.json();
 
             if (!data.logged_in) {
-                alert('You must be logged in to use this feature.');
+                alert('Hold up! 🔒 You need to be logged in to use this feature. 🐾');
                 window.location.href = '/login';
                 return;
             }

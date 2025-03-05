@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const result = await response.json();
                 if (result.success) {
-                    alert(result.message || "Account created successfully!");
+                    alert(result.message || "Pawsome! 🐶 Your account has been created successfully! Time to unleash the fun!");
                     window.location.href = "/login"; // Redirect to the login page
                 } else {
                     alert(result.message || "An error occurred. Please try again.");

@@ -25,12 +25,12 @@ def index():
 
         # Backend validation
         if not name or not email or not password:
-            return jsonify({"success": False, "message": "All fields are required."}), 400
+            return jsonify({"success": False, "message": "Woof! 🐾 Please fill in all the fields to continue."}), 400
 
         # Check if email already exists
         existing_user = adopters_col.find_one({"email": email})
         if existing_user:
-            return jsonify({"success": False, "message": "Email already registered."}), 400
+            return jsonify({"success": False, "message": "Oops! ✉️ This email is already registered. Try another one!."}), 400
 
         # Hash password before storing
         hashed_password = generate_password_hash(password)
@@ -39,4 +39,4 @@ def index():
         user_data = {"name": name, "email": email, "password": hashed_password}
         adopters_col.insert_one(user_data)
 
-        return jsonify({"success": True, "message": "Account created successfully!"}), 200
+        return jsonify({"success": True, "message": "Pawsome! 🐶 Your account has been created successfully! Time to unleash the fun"}), 200

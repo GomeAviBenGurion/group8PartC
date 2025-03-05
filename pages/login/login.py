@@ -31,11 +31,11 @@ def index():
         # Check if user exists in MongoDB
         user = adopters_col.find_one({"email": email})
         if not user:
-            return jsonify({"success": False, "message": "User not found."}), 401
+            return jsonify({"success": False, "message": "Uh-oh! 🤔 User not found. Try again or sign up! 🐾"}), 401
 
         # Verify the password
         if not check_password_hash(user["password"], password):
-            return jsonify({"success": False, "message": "Invalid credentials."}), 401
+            return jsonify({"success": False, "message": "Oops! ❌ Wrong email or password. Try again! 🔑"}), 401
 
         # Store user session
         session['logged_in'] = True
@@ -43,7 +43,7 @@ def index():
         session['user_name'] = user["name"]
         session['user_email'] = user["email"]
 
-        return jsonify({"success": True, "message": "Login successful!"}), 200
+        return jsonify({"success": True, "message": "You're in! 🎉 Welcome back to the pack! 🦴"}), 200
 
 
 @login.route('/logout', methods=['GET'])

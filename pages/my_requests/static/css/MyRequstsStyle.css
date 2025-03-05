@@ -116,3 +116,16 @@ h1 {
 .cancel-btn:hover {
     background-color: #cc0000;
 }
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #3C3D37;
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+.delete-btn:hover {
+    color: darkred;
+}

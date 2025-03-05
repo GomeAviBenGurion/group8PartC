@@ -34,6 +34,12 @@
                     {% if request.status == "Pending" %}
                         <button class="cancel-btn" onclick="cancelRequest('{{ request._id }}')">Cancel Request</button>
                     {% endif %}
+                {% if request.status == "Cancelled" %}
+                    <button class="delete-btn" onclick="deleteRequest('{{ request._id }}')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                {% endif %}
+
                 </div>
             {% endfor %}
         </div>

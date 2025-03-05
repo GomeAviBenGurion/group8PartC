@@ -6,9 +6,16 @@ document.addEventListener("DOMContentLoaded", () => {
         alert('Oops! This feature isn\'t ready yet. We\'re still teaching our tech dogs how to build it. 🐶');
     };
 
-    // Alert when "Forgot Password" is clicked
+    // Check if email is entered before "Forgot Password" alert
     document.getElementById('forgot-password').onclick = function() {
-        alert('Oops! This feature isn\'t ready yet. We\'re still teaching our tech dogs how to build it. 🐶');
+        const email = document.getElementById("email").value.trim();
+
+        if (!email) {
+            alert('Please enter your email before resetting your password. 📧');
+            return;
+        }
+
+        alert('No worries! 📧 A password reset email is on its way. Check your inbox! 🐾');
     };
 
     if (loginForm) {
@@ -32,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const result = await response.json();
 
                     if (result.success) {
-                        alert("Login successful!");
+                        alert("You're in! 🎉 Welcome back to the pack! 🦴");
 
                         // Redirect to the homepage
                         window.location.href = "/";

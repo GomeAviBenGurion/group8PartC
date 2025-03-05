@@ -94,7 +94,6 @@ def get_breeds():
     try:
         # Fetch unique breeds from existing dogs
         breeds = dogs_col.distinct("breed")  # Fetch unique breed values
-        print("Breeds from existing dogs:", breeds)  # Debugging output
         return jsonify(breeds)  # Return list of unique breeds
     except Exception as e:
         print("MongoDB Error:", e)  # Print error to Flask console
