@@ -1,7 +1,7 @@
 import sys
 from datetime import datetime
 from flask import Blueprint, render_template, session, jsonify, request
-from db_connector import dogs_col
+from db_connector import find_dogs, get_unique_breeds  # Import functions
 
 # Force UTF-8 encoding to handle special characters
 sys.stdout.reconfigure(encoding='utf-8')
@@ -24,6 +24,7 @@ gender_icons = {
 
 # Function to calculate age category
 def get_age_category(dob):
+    """Calculate age category based on date of birth."""
     if not dob:
         return "Unknown"
 
@@ -43,40 +44,23 @@ def get_age_category(dob):
 def index():
     try:
         # Retrieve filter values from request arguments
-        breed_filter = request.args.get("breed")
-        size_filter = request.args.get("size")
-        gender_filter = request.args.get("gender")
-        age_filter = request.args.get("age")
-
-        # Construct MongoDB query
-        query = {}
-
-        if breed_filter:
-            query["breed"] = breed_filter
-        if size_filter:
-            query["size"] = size_filter.lower()  # Ensure this matches the stored MongoDB field
-        if gender_filter:
-            query["sex"] = gender_filter.lower()  # Convert to lowercase for consistency
+        filters = {
+            "breed": request.args.get("breed"),
+            "size": request.args.get("size"),
+            "gender": request.args.get("gender"),
+            "age": request.args.get("age"),
+        }
 
         # Fetch filtered dogs from MongoDB
-        dogs = list(dogs_col.find(query))
+        dogs = find_dogs(filters)
 
-        # Process each dog's data
+        # Calculate age category for each dog
         for dog in dogs:
-            dog["_id"] = str(dog["_id"])  # Convert ObjectId to string
-
-            # Ensure `photo` field exists
-            if "photos" in dog and isinstance(dog["photos"], list) and len(dog["photos"]) > 0:
-                dog["photo"] = dog["photos"][0]  # Take the first photo
-            else:
-                dog["photo"] = "https://cdn-icons-png.flaticon.com/512/4225/4225925.png"
-
-            # Calculate and apply age category
             dog["age_category"] = get_age_category(dog.get("date_of_birth"))
 
         # Apply age filter after fetching data (since it's derived dynamically)
-        if age_filter:
-            dogs = [dog for dog in dogs if dog["age_category"] == age_filter]
+        if filters["age"]:
+            dogs = [dog for dog in dogs if dog["age_category"] == filters["age"]]
 
         print("Filtered Dogs:", dogs)  # Debugging output
 
@@ -93,7 +77,7 @@ def index():
 def get_breeds():
     try:
         # Fetch unique breeds from existing dogs
-        breeds = dogs_col.distinct("breed")  # Fetch unique breed values
+        breeds = get_unique_breeds()
         return jsonify(breeds)  # Return list of unique breeds
     except Exception as e:
         print("MongoDB Error:", e)  # Print error to Flask console

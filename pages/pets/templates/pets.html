@@ -5,49 +5,50 @@
 {% block content %}
     <link rel="stylesheet" href="{{ url_for('pets.static', filename='css/PetsStyles.css') }}">
     <script src="{{ url_for('pets.static', filename='js/PetsScripts.js') }}"></script>
-   <section class="adoption-section">
+
+    <section class="adoption-section">
         <div class="adoption-container">
 
             <!-- Filter Bar -->
-<div class="filter-bar">
-    <div class="filter-buttons-group">
-        <button class="filter-btn toggle-btn" style="min-width: 40px">
-            <i class="fa fa-sliders-h"></i>
-        </button>
+            <div class="filter-bar">
+                <div class="filter-buttons-group">
+                    <button class="filter-btn toggle-btn" style="min-width: 40px">
+                        <i class="fa fa-sliders-h"></i>
+                    </button>
 
-        <!-- Breed Dropdown -->
-        <div class="dropdown">
-            <button class="filter-btn filter-option" id="breedButton">Breed</button>
-            <div class="dropdown-menu" id="breedList">
-                <input type="text" id="breedSearch" class="search-bar" placeholder="Search breeds...">
-                <ul id="breedItems"></ul>
+                    <!-- Breed Dropdown -->
+                    <div class="dropdown">
+                        <button class="filter-btn filter-option" id="breedButton">Breed</button>
+                        <div class="dropdown-menu" id="breedList">
+                            <input type="text" id="breedSearch" class="search-bar" placeholder="Search breeds...">
+                            <ul id="breedItems"></ul>
+                        </div>
+                    </div>
+
+                    <!-- Gender Dropdown -->
+                    <div class="dropdown">
+                        <button class="filter-btn filter-option" id="genderButton">Gender</button>
+                        <ul class="dropdown-menu" id="genderList"></ul>
+                    </div>
+
+                    <!-- Size Dropdown -->
+                    <div class="dropdown">
+                        <button class="filter-btn filter-option" id="sizeButton">Size</button>
+                        <ul class="dropdown-menu" id="sizeList"></ul>
+                    </div>
+
+                    <!-- Age Dropdown -->
+                    <div class="dropdown">
+                        <button class="filter-btn filter-option" id="ageButton">Age</button>
+                        <ul class="dropdown-menu" id="ageList"></ul>
+                    </div>
+
+                    <button class="filter-btn apply-btn filter-option" id="applyFilters">Apply Filters</button>
+                    <button class="filter-btn clear-btn filter-option" id="clearAllFilters">Clear Filters</button>
+                </div>
             </div>
-        </div>
 
-        <!-- Gender Dropdown -->
-        <div class="dropdown">
-            <button class="filter-btn filter-option" id="genderButton">Gender</button>
-            <ul class="dropdown-menu" id="genderList"></ul>
-        </div>
-
-        <!-- Size Dropdown -->
-        <div class="dropdown">
-            <button class="filter-btn filter-option" id="sizeButton">Size</button>
-            <ul class="dropdown-menu" id="sizeList"></ul>
-        </div>
-
-        <!-- Age Dropdown -->
-        <div class="dropdown">
-            <button class="filter-btn filter-option" id="ageButton">Age</button>
-            <ul class="dropdown-menu" id="ageList"></ul>
-        </div>
-
-        <button class="filter-btn apply-btn filter-option" id="applyFilters">Apply Filters</button>
-        <button class="filter-btn clear-btn filter-option" id="clearFilters">Clear Filters</button>
-
-    </div>
-</div>
-           <!-- Dogs Grid -->
+            <!-- Dogs Grid -->
             <div class="dogs-grid">
                 {% if dogs %}
                     {% for dog in dogs %}

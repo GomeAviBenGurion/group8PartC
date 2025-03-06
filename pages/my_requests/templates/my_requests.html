@@ -15,14 +15,12 @@
                 <div class="request-item">
                     <!-- Image placeholder if no image available -->
                     <div class="dog-photo">
-                    {% if request.photo %}
-                        <img src="{{ request.photo }}" alt="{{ request.dog_name }}" class="dog-photo">
-                    {% else %}
-                        <img src="https://cdn-icons-png.flaticon.com/512/4225/4225925.png" alt="No Image" class="dog-photo">
-                    {% endif %}
-                </div>
-
-
+                        {% if request.photo %}
+                            <img src="{{ request.photo }}" alt="{{ request.dog_name }}" class="dog-photo">
+                        {% else %}
+                            <img src="https://cdn-icons-png.flaticon.com/512/4225/4225925.png" alt="No Image" class="dog-photo">
+                        {% endif %}
+                    </div>
 
                     <!-- Request details -->
                     <div class="request-details">
@@ -31,15 +29,16 @@
                         <p class="request-date">Requested on: {{ request.request_date }}</p>
                     </div>
 
+                    <!-- Buttons based on status -->
                     {% if request.status == "Pending" %}
                         <button class="cancel-btn" onclick="cancelRequest('{{ request._id }}')">Cancel Request</button>
                     {% endif %}
-                {% if request.status == "Cancelled" %}
-                    <button class="delete-btn" onclick="deleteRequest('{{ request._id }}')">
-                        <i class="fas fa-times"></i>
-                    </button>
-                {% endif %}
 
+                    {% if request.status == "Cancelled" %}
+                        <button class="delete-btn" onclick="deleteRequest('{{ request._id }}')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>

@@ -5,11 +5,13 @@ from pages.login.login import login
 from pages.sign_up.sign_up import sign_up
 from pages.dog_info.dog_info import dog_info
 from pages.my_requests.my_requests import my_requests
-from db_connector import adopters_col  # Import database connection
-
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
-app.secret_key = "Gome"
+load_dotenv()  # Load environment variables from .env file
+
+app.secret_key = os.getenv("SECRET_KEY")  # Use the secret key from .env
 
 # Register blueprints
 app.register_blueprint(homepage)

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, session, jsonify, redirect, url_for
 from werkzeug.security import check_password_hash
-from db_connector import adopters_col  # Import database connection
+from db_connector import verify_adopter  # Import authentication function
 
 # Define the blueprint
 login = Blueprint(
@@ -10,6 +10,7 @@ login = Blueprint(
     static_url_path='/login/static',
     template_folder='templates'
 )
+
 
 # Routes
 @login.route('/login', methods=['GET', 'POST'])
@@ -28,13 +29,9 @@ def index():
         if not email or not password:
             return jsonify({"success": False, "message": "Email and password are required."}), 400
 
-        # Check if user exists in MongoDB
-        user = adopters_col.find_one({"email": email})
+        # Authenticate user
+        user = verify_adopter(email, password, check_password_hash)
         if not user:
-            return jsonify({"success": False, "message": "Uh-oh! 🤔 User not found. Try again or sign up! 🐾"}), 401
-
-        # Verify the password
-        if not check_password_hash(user["password"], password):
             return jsonify({"success": False, "message": "Oops! ❌ Wrong email or password. Try again! 🔑"}), 401
 
         # Store user session

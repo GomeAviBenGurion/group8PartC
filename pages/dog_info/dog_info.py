@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, session, jsonify
-from db_connector import dogs_col, breeds_col, requests_col
-from bson.objectid import ObjectId
+from db_connector import get_dog_by_id, get_breed_details, submit_adoption_request
 from datetime import datetime
 
 # Define blueprint
@@ -15,6 +14,7 @@ dog_info = Blueprint(
 
 # Function to calculate age in years
 def calculate_age(date_of_birth):
+    """Calculate a dog's age in years and months."""
     if not date_of_birth:
         return "Unknown"
 
@@ -48,21 +48,14 @@ def calculate_age(date_of_birth):
 @dog_info.route('/dog_info/<dog_id>')
 def index(dog_id):
     try:
-        # Fetch the dog's details from MongoDB
-        dog = dogs_col.find_one({"_id": ObjectId(dog_id)})
+        # Fetch the dog's details
+        dog = get_dog_by_id(dog_id)
 
         if not dog:
             return "Dog not found", 404
 
-        # Fetch breed details based on the dog's breed
-        breed_details = breeds_col.find_one({"breed": dog["breed"]})
-
-        # Convert ObjectId to string
-        dog["_id"] = str(dog["_id"])
-
-        # Ensure the `photos` field is available and store multiple photos
-        if "photos" not in dog or not isinstance(dog["photos"], list) or len(dog["photos"]) == 0:
-            dog["photos"] = ["https://cdn-icons-png.flaticon.com/512/4225/4225925.png"]  # Default image
+        # Fetch breed details
+        breed_details = get_breed_details(dog["breed"])
 
         # Calculate and include age in years
         dog["age"] = calculate_age(dog.get("date_of_birth"))
@@ -90,37 +83,15 @@ def adopt_dog(dog_id):
         return jsonify({"error": "User not logged in"}), 401  # Unauthorized
 
     try:
-        # Fetch the dog's details from MongoDB
-        dog = dogs_col.find_one({"_id": ObjectId(dog_id)})
+        # Fetch the dog's details
+        dog = get_dog_by_id(dog_id)
 
         if not dog:
             return jsonify({"error": "Dog not found"}), 404  # Not found
 
-        # Extract user details
-        user_email = session['user_email']
-
-        # Check if an adoption request already exists
-        existing_request = requests_col.find_one({"user_email": user_email, "dog_id": dog_id})
-        if existing_request:
-            return jsonify({"error": "Heads up! 🐾 You've already submitted an adoption request for this pup. 🐶"}), 400
-
-        # Extract dog's first photo
-        photo_url = dog["photos"][0] if "photos" in dog and len(dog["photos"]) > 0 else "https://cdn-icons-png.flaticon.com/512/4225/4225925.png"
-
-        # Prepare adoption request document
-        adoption_request = {
-            "user_email": user_email,
-            "dog_id": dog_id,
-            "dog_name": dog["name"],
-            "photo": photo_url,
-            "status": "Pending",
-            "request_date": datetime.today().strftime("%Y-%m-%d")
-        }
-
-        # Insert the request into MongoDB
-        requests_col.insert_one(adoption_request)
-
-        return jsonify({"message": "Yay! 🎉 Your adoption request has been submitted successfully! 🐾"}), 200
+        # Submit adoption request
+        response, status_code = submit_adoption_request(session['user_email'], dog)
+        return jsonify(response), status_code
 
     except Exception as e:
         print(f"Error processing adoption request: {e}")

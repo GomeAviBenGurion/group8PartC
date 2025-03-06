@@ -1,6 +1,5 @@
-from bson import ObjectId
 from flask import Blueprint, render_template, session, jsonify, request, redirect, url_for
-from db_connector import requests_col  # Import database connection
+from db_connector import get_adoption_requests_by_user, cancel_adoption_request, delete_adoption_request
 
 # my_requests blueprint definition
 my_requests = Blueprint(
@@ -11,6 +10,7 @@ my_requests = Blueprint(
     template_folder='templates'
 )
 
+
 # Route to render My Requests page
 @my_requests.route('/my_requests')
 def index():
@@ -18,15 +18,7 @@ def index():
         return redirect(url_for('login.index'))
 
     user_email = session['user_email']
-
-    # Fetch requests from MongoDB
-    adoption_requests = list(requests_col.find({"user_email": user_email}))
-
-    # Convert `_id` to string & ensure `photo` exists
-    for request in adoption_requests:
-        request["_id"] = str(request["_id"])  # Convert ObjectId to string
-        if "photo" not in request or not request["photo"]:
-            request["photo"] = "https://cdn-icons-png.flaticon.com/512/4225/4225925.png"  # Default Image
+    adoption_requests = get_adoption_requests_by_user(user_email)
 
     return render_template("my_requests.html", is_logged_in=True, requests=adoption_requests)
 
@@ -37,27 +29,10 @@ def cancel_request():
     request_id = request.json.get('request_id')
 
     if not request_id:
-        print("❌ Missing request_id in request")
         return jsonify({"error": "Missing request_id"}), 400
 
-    try:
-        object_id = ObjectId(request_id)  # Convert to ObjectId
-        print(f"🔍 Request to cancel: {object_id}")  # Debugging line
-
-        result = requests_col.update_one(
-            {"_id": object_id},  # Query by ObjectId
-            {"$set": {"status": "Cancelled"}}
-        )
-
-        if result.modified_count > 0:
-            print(f"✅ Request {object_id} successfully cancelled.")
-            return jsonify({"message": "Request status updated to Cancelled", "request_id": request_id})
-        else:
-            print(f"⚠️ Request {object_id} not found or already cancelled.")
-            return jsonify({"error": "Request not found or already cancelled"}), 400
-    except Exception as e:
-        print(f"❌ Error in cancel_request: {e}")  # Debugging line
-        return jsonify({"error": str(e)}), 400
+    response, status_code = cancel_adoption_request(request_id)
+    return jsonify(response), status_code
 
 
 # API Route to delete a cancelled request
@@ -68,13 +43,5 @@ def delete_request():
     if not request_id:
         return jsonify({"error": "Missing request_id"}), 400
 
-    try:
-        object_id = ObjectId(request_id)  # Convert to ObjectId
-        result = requests_col.delete_one({"_id": object_id, "status": "Cancelled"})
-
-        if result.deleted_count > 0:
-            return jsonify({"message": "Gone! 🐾 Your request has been deleted successfully. 🗑️", "request_id": request_id})
-        else:
-            return jsonify({"error": "Request not found or not in 'Cancelled' status"}), 400
-    except Exception as e:
-        return jsonify({"error": str(e)}), 400
+    response, status_code = delete_adoption_request(request_id)
+    return jsonify(response), status_code

@@ -26,9 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Toggle filter buttons visibility
     toggleButton.addEventListener("click", () => {
-        filterButtons.forEach(button => {
-            button.classList.toggle("hidden");
-        });
+        filterButtons.forEach(button => button.classList.toggle("hidden"));
     });
 
     // Load breeds dynamically from available dogs
@@ -61,9 +59,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     populateList(sizeOptions, sizeList, sizeButton);
     populateList(ageOptions, ageList, ageButton);
 
-    // Function to populate Breed dropdown with search bar & clear option
     function populateBreedDropdown() {
-        breedList.innerHTML = ""; // Clear existing dropdown
+        breedList.innerHTML = "";
 
         // Create search bar
         const searchInput = document.createElement("input");
@@ -87,16 +84,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             breedButton.classList.remove("selected");
             breedList.style.display = "none";
             searchInput.value = "";
-            updateBreedList(breeds);
+            fetchFilteredDogs();
         });
 
         breedList.appendChild(clearOption);
-
-        // Populate breed list
         updateBreedList(breeds);
     }
 
-    // Function to update the Breed list dynamically
     function updateBreedList(breedArray) {
         breedList.querySelectorAll(".dropdown-item").forEach(item => item.remove());
 
@@ -115,7 +109,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // Function to populate non-breed dropdowns
     function populateList(options, container, button) {
         container.innerHTML = "";
 
@@ -126,6 +119,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             button.textContent = button.dataset.defaultText;
             button.classList.remove("selected");
             container.style.display = "none";
+            fetchFilteredDogs();
         });
 
         container.appendChild(clearOption);
@@ -145,7 +139,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // Fetch and update displayed dogs based on filters
     async function fetchFilteredDogs() {
         let queryParams = [];
 
@@ -177,28 +170,32 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    // Attach event listener to apply filters
     applyFiltersButton.addEventListener("click", fetchFilteredDogs);
 
-    // Toggle dropdown visibility when clicking buttons
     function toggleDropdown(button, dropdown) {
         button.addEventListener("click", () => {
             dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
         });
     }
 
-    toggleDropdown(breedButton, breedList);
-    toggleDropdown(genderButton, genderList);
-    toggleDropdown(sizeButton, sizeList);
-    toggleDropdown(ageButton, ageList);
+    [breedButton, genderButton, sizeButton, ageButton].forEach(button => {
+        toggleDropdown(button, button.nextElementSibling);
+    });
 
-    // Close dropdowns when clicking outside
-    document.addEventListener("click", (event) => {
+    document.addEventListener("click", event => {
         [breedButton, genderButton, sizeButton, ageButton].forEach(button => {
             const dropdown = button.nextElementSibling;
             if (!button.contains(event.target) && !dropdown.contains(event.target)) {
                 dropdown.style.display = "none";
             }
         });
+    });
+
+    document.getElementById("clearAllFilters").addEventListener("click", () => {
+        [breedButton, genderButton, sizeButton, ageButton].forEach(button => {
+            button.textContent = button.dataset.defaultText;
+            button.classList.remove("selected");
+        });
+        fetchFilteredDogs();
     });
 });
